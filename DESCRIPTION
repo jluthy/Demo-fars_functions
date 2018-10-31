@@ -1,0 +1,11 @@
+Package: fars
+Type: Package
+Title: Reads Fatality Analysis Reporting Sytem (FARS) data
+Version: 0.1.0
+Author: jluthy
+Maintainer: jluthy <yourself@gmail.com>
+Description: Reads data from FARS, a nationwide database of reported wrecks and
+    fatalitits on public roads. 
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
