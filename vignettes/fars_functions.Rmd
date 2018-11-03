@@ -1,5 +1,5 @@
 ---
-title: "Fars"
+title: "fars"
 author: "jluthy"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 
 ```{r, include = FALSE}
-library(dpylr)
+library(dplyr)
 library(readr)
 library(tidyr)
 library(maps)
@@ -26,6 +26,7 @@ library(maps)
 
 
 ```{r fars_functions, include = FALSE}
+system.file(package = "fars", "extdata", "accident_2015.csv.bz2")
 fars_read <- function(filename) {
   if(!file.exists(filename))
     stop("file '", filename, "' does not exist")
