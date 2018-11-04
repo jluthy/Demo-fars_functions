@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r, include = FALSE}
+```{r libs, include = FALSE}
 library(dplyr)
 library(readr)
 library(tidyr)
@@ -26,7 +26,6 @@ library(maps)
 
 
 ```{r fars_functions, include = FALSE}
-system.file(package = "fars", "extdata", "accident_2015.csv.bz2")
 fars_read <- function(filename) {
   if(!file.exists(filename))
     stop("file '", filename, "' does not exist")
@@ -92,16 +91,16 @@ Reads data from FARS, a nationwide database of reported wrecks and fatalitits on
 
 Code was built to look through three of the provided data sets and return the matching file. It will then read the file and return a table.
 
-```{r read data file}
-fars_read(filename="accident_2015.csv.bz2")
+```{r read data file, inlcude = FALSE, eval = FALSE}
+fars_read("./inst/extdata/accident_2015.csv.bz2")
 ```
 
 #### *Create a file name*
-This function creates the file name when given 'year' as input.
+This function creates the file name when given year as input.
 
 This function returns a character string with coding "accident_year.csv.bz2"
 
-```{r make file name}
+```{r make file name, inlcude = FALSE, eval = FALSE}
 make_filename(2015)
 ```
 
@@ -113,7 +112,7 @@ When passing the function a list of valid years as input, it gets associated fil
 
 This function returns a list of tables corresponding to list of years.
 
-```{r summary}
+```{r summary, include = FALSE, eval = FALSE}
 fars_read_years(years=c(2013,2014,2015))
 ```
 
@@ -121,7 +120,7 @@ fars_read_years(years=c(2013,2014,2015))
 
 This function receives a list of years as an input and gets data tables with \code{fars_read_years} Then it summarizes the results per year.
 
-```{r summarize years}
+```{r summarize years, include = FALSE, eval = FALSE}
 fars_summarize_years(years=c(2013,2014,2015))
 ```
 
@@ -130,6 +129,6 @@ fars_summarize_years(years=c(2013,2014,2015))
 
 This function gets passed a specific state and year, then gets associated data. If the state exists, it filters the data per state and plots accidents for that state.
 
-```{r map it}
+```{r map it, include = FALSE, eval = FALSE}
 fars_map_state(state.num=1,year=2015)
 ```
