@@ -101,7 +101,7 @@ This function creates the file name when given year as input.
 This function returns a character string with coding "accident_year.csv.bz2"
 
 ```{r make file name, inlcude = FALSE, eval = FALSE}
-make_filename(2015)
+make_filename(c(2013, 2014, 2015))
 ```
 
 #### *Read Data & Summarize*
@@ -113,7 +113,7 @@ When passing the function a list of valid years as input, it gets associated fil
 This function returns a list of tables corresponding to list of years.
 
 ```{r summary, include = FALSE, eval = FALSE}
-fars_read_years(years=c(2013,2014,2015))
+fars_read_years(c(2013,2014,2015))
 ```
 
 #### *Summarize Years*
@@ -121,7 +121,7 @@ fars_read_years(years=c(2013,2014,2015))
 This function receives a list of years as an input and gets data tables with \code{fars_read_years} Then it summarizes the results per year.
 
 ```{r summarize years, include = FALSE, eval = FALSE}
-fars_summarize_years(years=c(2013,2014,2015))
+fars_summarize_years(c(2013,2014,2015))
 ```
 
 

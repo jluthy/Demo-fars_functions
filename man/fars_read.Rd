@@ -2,7 +2,10 @@
 % Please edit documentation in R/fars_function.R
 \name{fars_read}
 \alias{fars_read}
-\title{fars functions for Coursera R package course}
+\title{fars functions for Coursera R package course
+
+The fars_read function imports a file, if it exists, in csv format and
+converts it to a table. If file does not exist it returns an error.}
 \usage{
 fars_read(filename)
 }
@@ -13,6 +16,8 @@ fars_read(filename)
 This function returns a table with data from the loaded file
 }
 \description{
+fars functions for Coursera R package course
+
 The fars_read function imports a file, if it exists, in csv format and
 converts it to a table. If file does not exist it returns an error.
 }
@@ -22,6 +27,7 @@ Function will return error if file does not exist
 \examples{
 \dontrun{
 fars_read(filename="accident_2015.csv.bz2")
+t <- system.file("extdata", "accident_2013.csv.bz2", package="fars") fars_read(t)
 }
 
 }
