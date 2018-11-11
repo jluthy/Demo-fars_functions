@@ -55,7 +55,7 @@ make_filename <- function(year) {
 #' @importFrom dplyr mutate select
 #' @importFrom dplyr %>%
 #' @examples \dontrun{
-#' fars_read_years(years=c(2013,2014,2015))
+#' fars_read_years(c(2013,2014,2015))
 #' }
 #'
 #' @note Function will return an error if year is not valid
@@ -87,11 +87,7 @@ fars_read_years <- function(years) {
 #' @importFrom dplyr bind_rows group_by summarize %>%
 #' @importFrom tidyr spread
 #'
-#' @exmples \dontrun{
-#' fars_summarize_years(years=c(2013,2014,2015))
-#' }
-#'
-#'
+#' @examples \dontrun{fars_summarize_years(c(2013,2014,2015)}
 #' @export
 fars_summarize_years <- function(years) {
   dat_list <- fars_read_years(years)
