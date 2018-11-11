@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r, include = FALSE}
+```{r libs}
 library(dplyr)
 library(readr)
 library(tidyr)
@@ -25,87 +25,29 @@ library(maps)
 ```
 
 
-```{r fars_functions, include = FALSE}
-system.file(package = "fars", "extdata", "accident_2015.csv.bz2")
-fars_read <- function(filename) {
-  if(!file.exists(filename))
-    stop("file '", filename, "' does not exist")
-  data <- suppressMessages({
-    readr::read_csv(filename, progress = FALSE)
-  })
-  dplyr::tbl_df(data)
-}
-
-make_filename <- function(year) {
-  year <- as.integer(year)
-  sprintf("accident_%d.csv.bz2", year)
-}
-
-fars_read_years <- function(years) {
-  lapply(years, function(year) {
-    file <- make_filename(year)
-    tryCatch({
-      dat <- fars_read(file)
-      dplyr::mutate(dat, year = year) %>%
-        dplyr::select(MONTH, year)
-    }, error = function(e) {
-      warning("invalid year: ", year)
-      return(NULL)
-    })
-  })
-}
-
-fars_summarize_years <- function(years) {
-  dat_list <- fars_read_years(years)
-  dplyr::bind_rows(dat_list) %>%
-    dplyr::group_by(year, MONTH) %>%
-    dplyr::summarize(n = n()) %>%
-    tidyr::spread(year, n)
-}
-
-fars_map_state <- function(state.num, year) {
-  filename <- make_filename(year)
-  data <- fars_read(filename)
-  state.num <- as.integer(state.num)
-
-  if(!(state.num %in% unique(data$STATE)))
-    stop("invalid STATE number: ", state.num)
-  data.sub <- dplyr::filter(data, STATE == state.num)
-  if(nrow(data.sub) == 0L) {
-    message("no accidents to plot")
-    return(invisible(NULL))
-  }
-  is.na(data.sub$LONGITUD) <- data.sub$LONGITUD > 900
-  is.na(data.sub$LATITUDE) <- data.sub$LATITUDE > 90
-  with(data.sub, {
-    maps::map("state", ylim = range(LATITUDE, na.rm = TRUE),
-              xlim = range(LONGITUD, na.rm = TRUE))
-    graphics::points(LONGITUD, LATITUDE, pch = 46)
-  })
-}
-```
-
 This describes some of the features of this package. 
 Reads data from FARS, a nationwide database of reported wrecks and fatalitits on public roads. 
 
-#### *Read in the data*
+### *Read in the data*
 
 Code was built to look through three of the provided data sets and return the matching file. It will then read the file and return a table.
 
-```{r read data file}
-fars_read(filename="accident_2015.csv.bz2")
+```{r read data file, eval = TRUE}
+library(fars)
+t <- system.file("extdata", "accident_2013.csv.bz2", package="fars") 
+fars_read(t)
 ```
 
-#### *Create a file name*
-This function creates the file name when given 'year' as input.
+### *Create a file name*
+This function creates the file name when given year as input.
 
 This function returns a character string with coding "accident_year.csv.bz2"
 
-```{r make file name}
-make_filename(2015)
+```{r make file name, eval =  TRUE}
+make_filename(2013)
 ```
 
-#### *Read Data & Summarize*
+### *Read Data & Summarize*
 
 This function makes data frames with MONTH and year columns
 
@@ -114,22 +56,17 @@ When passing the function a list of valid years as input, it gets associated fil
 This function returns a list of tables corresponding to list of years.
 
 ```{r summary}
-fars_read_years(years=c(2013,2014,2015))
+fars_read_years(c(2013, 2014, 2015))
 ```
 
-#### *Summarize Years*
+### *Summarize Years*
 
 This function receives a list of years as an input and gets data tables with \code{fars_read_years} Then it summarizes the results per year.
 
-```{r summarize years}
-fars_summarize_years(years=c(2013,2014,2015))
-```
-
-
-#### *Map it out*
+### *Map it out*
 
 This function gets passed a specific state and year, then gets associated data. If the state exists, it filters the data per state and plots accidents for that state.
 
-```{r map it}
-fars_map_state(state.num=1,year=2015)
+```{r, eval = FALSE}
+fars_map_state(state.num=1,year=2013)
 ```

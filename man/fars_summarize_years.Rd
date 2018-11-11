@@ -17,3 +17,6 @@ This function returns a table with summarized results for each year.
 This function receives a list of years as an input and gets data tables
 with \code{fars_read_years} Then it summarizes the results per year.
 }
+\examples{
+\dontrun{fars_summarize_years(c(2013,2014,2015)}
+}

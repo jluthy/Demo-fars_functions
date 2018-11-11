@@ -1,4 +1,4 @@
-#' fars functions for Coursera R package course
+#' @title fars functions for Coursera R package course
 #'
 #' The fars_read function imports a file, if it exists, in csv format and
 #' converts it to a table. If file does not exist it returns an error.
@@ -9,6 +9,7 @@
 #'
 #' @examples \dontrun{
 #' fars_read(filename="accident_2015.csv.bz2")
+#' t <- system.file("extdata", "accident_2013.csv.bz2", package="fars") fars_read(t)
 #' }
 #'
 #' @importFrom readr read_csv
@@ -52,9 +53,9 @@ make_filename <- function(year) {
 #' @return This function returns a list of tables corresponding to list of years.
 #'
 #' @importFrom dplyr mutate select
-#'
+#' @importFrom dplyr %>%
 #' @examples \dontrun{
-#' fars_read_years(years=c(2013,2014,2015))
+#' fars_read_years(c(2013,2014,2015))
 #' }
 #'
 #' @note Function will return an error if year is not valid
@@ -83,13 +84,10 @@ fars_read_years <- function(years) {
 #'
 #' @return This function returns a table with summarized results for each year.
 #'
-#' @importFrom dplyr bind_rows group_by summarize
-#'
+#' @importFrom dplyr bind_rows group_by summarize %>%
 #' @importFrom tidyr spread
 #'
-#' @exmples \dontrun{
-#' fars_summarize_years(years=c(2013,2014,2015))
-#' }
+#' @examples \dontrun{fars_summarize_years(c(2013,2014,2015)}
 #' @export
 fars_summarize_years <- function(years) {
   dat_list <- fars_read_years(years)
